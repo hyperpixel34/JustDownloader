@@ -6,6 +6,12 @@ Kostenloser YouTube Downloader ohne Werbung
 
 Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
+# Features
+
+- Download von Videos (720p)
+- Download von Audios (mp3)
+- Download von Audios mit Cover (Thumbnail)
+- Download von YouTube Music
 
 # Screenshots
 
