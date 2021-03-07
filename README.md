@@ -6,6 +6,11 @@ Kostenloser YouTube Downloader ohne Werbung
 
 Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
+# Installation
+
+Zip Archiv entpacken und im entpacktem Ordner enthaltene
+JustDownloader.exe ausführen
+
 # Features
 
 - Download von Videos (720p)
