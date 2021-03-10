@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/hyperpixel34/justdownloader/total.svg)]()
+
 # JustDownloader
 
 ![icon200](https://user-images.githubusercontent.com/80213902/110249657-6f4bb380-7f77-11eb-986b-d0990a8c8e9e.png)
