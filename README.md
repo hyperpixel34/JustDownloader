@@ -10,7 +10,7 @@ Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
 # Installation
 
-Zip Archiv entpacken und im entpacktem Ordner enthaltene
+ZIP Archiv entpacken und im entpacktem Ordner enthaltene
 JustDownloader.exe ausführen
 
 # Features
