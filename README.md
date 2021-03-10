@@ -22,4 +22,3 @@ JustDownloader.exe ausführen
 
 # Screenshots
 
-![image](https://user-images.githubusercontent.com/80213902/110249693-a4580600-7f77-11eb-894b-d7bc8eb77644.png)
