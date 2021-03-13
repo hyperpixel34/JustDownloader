@@ -371,7 +371,7 @@ namespace YT_Downloader
             aboutus.ShowDialog();
         }
 
-        private async void öffnenToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void öffnenToolStripMenuItem_Click(object sender, EventArgs e) // Textdatei importieren
         {
             openFileDialog1.ShowDialog();
             String file = openFileDialog1.FileName;
@@ -400,7 +400,7 @@ namespace YT_Downloader
                 }
                 catch (ArgumentException)
                 {
-                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
+                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der Link ungültig ist
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
@@ -410,7 +410,7 @@ namespace YT_Downloader
             }
         }
 
-        private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
+        private void speichernToolStripMenuItem_Click(object sender, EventArgs e) // Textdatei exportieren
         {
             saveFileDialog1.ShowDialog();
             string savefilename = saveFileDialog1.FileName;
