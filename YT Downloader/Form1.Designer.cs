@@ -41,7 +41,6 @@ namespace YT_Downloader
             this.format = new System.Windows.Forms.GroupBox();
             this.YTMusic = new System.Windows.Forms.RadioButton();
             this.download = new System.Windows.Forms.Button();
-            this.browse = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,9 +56,16 @@ namespace YT_Downloader
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.download_progress_label = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.browse = new System.Windows.Forms.Button();
             this.format.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // path
@@ -179,16 +185,6 @@ namespace YT_Downloader
             this.download.UseVisualStyleBackColor = true;
             this.download.Click += new System.EventHandler(this.download_Click);
             // 
-            // browse
-            // 
-            this.browse.Image = ((System.Drawing.Image)(resources.GetObject("browse.Image")));
-            this.browse.Location = new System.Drawing.Point(540, 24);
-            this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(32, 32);
-            this.browse.TabIndex = 1;
-            this.browse.UseVisualStyleBackColor = true;
-            this.browse.Click += new System.EventHandler(this.browse_Click);
-            // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
@@ -279,7 +275,7 @@ namespace YT_Downloader
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.download_progress_label});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 381);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 430);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(584, 22);
             this.statusStrip1.TabIndex = 15;
@@ -293,16 +289,56 @@ namespace YT_Downloader
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 349);
+            this.progressBar1.Location = new System.Drawing.Point(12, 401);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(560, 23);
             this.progressBar1.TabIndex = 16;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::YT_Downloader.Properties.Resources.connect_10201_10;
+            this.pictureBox3.Location = new System.Drawing.Point(143, 345);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(54, 50);
+            this.pictureBox3.TabIndex = 19;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::YT_Downloader.Properties.Resources.empty;
+            this.pictureBox2.Location = new System.Drawing.Point(203, 345);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(178, 50);
+            this.pictureBox2.TabIndex = 18;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::YT_Downloader.Properties.Resources.imageres_109_13;
+            this.pictureBox1.Location = new System.Drawing.Point(387, 345);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(54, 50);
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
+            // 
+            // browse
+            // 
+            this.browse.Image = ((System.Drawing.Image)(resources.GetObject("browse.Image")));
+            this.browse.Location = new System.Drawing.Point(540, 24);
+            this.browse.Name = "browse";
+            this.browse.Size = new System.Drawing.Size(32, 32);
+            this.browse.TabIndex = 1;
+            this.browse.UseVisualStyleBackColor = true;
+            this.browse.Click += new System.EventHandler(this.browse_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 403);
+            this.ClientSize = new System.Drawing.Size(584, 452);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label2);
@@ -329,6 +365,9 @@ namespace YT_Downloader
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,6 +402,9 @@ namespace YT_Downloader
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel download_progress_label;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
 

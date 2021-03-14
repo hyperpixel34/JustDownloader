@@ -113,6 +113,7 @@ namespace YT_Downloader
         private async void add_video_Click(object sender, EventArgs e)
         {
             if (link.Text != "") // Bewirkt das Videos nur hinzugefügt werden können wenn die link textbox nicht leer ist
+                pictureBox2.Image = Properties.Resources.ping;
                 try
                 {
                     var youtube = new YoutubeClient();
@@ -127,12 +128,15 @@ namespace YT_Downloader
                 }
                 catch (ArgumentException)
                 {
+                    pictureBox2.Image = Properties.Resources.error;
                     MessageBox.Show("Das ist kein YouTube Video", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
+                    pictureBox2.Image = Properties.Resources.error;
                     MessageBox.Show("Keine Internetverbindung!", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                 }
+            pictureBox2.Image = Properties.Resources.empty;
         }
 
         private void del_video_Click(object sender, EventArgs e) // Löschen eines Eintrages
@@ -173,6 +177,7 @@ namespace YT_Downloader
                     {
                         for (int i = 0; i < video_links.Count; i++)
                         {
+                            pictureBox2.Image = Properties.Resources.download;
                             download_progress_label.Text = "Bitte warten...";
                             var youtube = new YoutubeClient();
 
@@ -194,6 +199,7 @@ namespace YT_Downloader
                     {
                         for (int i = 0; i < video_links.Count; i++)
                         {
+                            pictureBox2.Image = Properties.Resources.download;
                             download_progress_label.Text = "Bitte warten...";
                             var youtube = new YoutubeClient();
 
@@ -211,6 +217,8 @@ namespace YT_Downloader
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
+                            pictureBox1.Image = Properties.Resources.imageres_23_8;
+                            pictureBox3.Image = Properties.Resources.imageres_131_8;
                             await Task.Run(() =>
                             {
                                 conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + ".mp3", "mp3");
@@ -222,6 +230,7 @@ namespace YT_Downloader
                     {
                         for (int i = 0; i < video_links.Count; i++)
                         {
+                            pictureBox2.Image = Properties.Resources.download;
                             download_progress_label.Text = "Bitte warten...";
                             var youtube = new YoutubeClient();
 
@@ -238,6 +247,8 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
+                            pictureBox1.Image = Properties.Resources.imageres_23_8;
+                            pictureBox3.Image = Properties.Resources.imageres_131_8;
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
 
                             using (var client = new WebClient()) // Downloadet das Thumbnail
@@ -275,6 +286,7 @@ namespace YT_Downloader
                     {
                         for (int i = 0; i < video_links.Count; i++)
                         {
+                            pictureBox2.Image = Properties.Resources.download;
                             download_progress_label.Text = "Bitte warten...";
                             var youtube = new YoutubeClient();
 
@@ -291,6 +303,8 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
+                            pictureBox1.Image = Properties.Resources.imageres_23_8;
+                            pictureBox3.Image = Properties.Resources.imageres_131_8;
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
                             await Task.Run(() =>
                             {
@@ -325,11 +339,15 @@ namespace YT_Downloader
                     // Löscht alle Items aus video_listbox und video_links
                     video_listbox.Items.Clear();
                     video_links.Clear();
+                    pictureBox2.Image = Properties.Resources.success;
+                    pictureBox1.Image = Properties.Resources.connect_10201_10;
+                    pictureBox3.Image = Properties.Resources.imageres_109_13;
                     var result = MessageBox.Show("Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Information); // Zeigt eine Messagebox an
                     if (result == DialogResult.Yes)
                     {
                         System.Diagnostics.Process.Start("explorer.exe", path.Text); // Wenn beim letzten Dialog mit Ja geantwortet wurde, wird der Downloadordner geöffnet
                     }
+                    pictureBox2.Image = Properties.Resources.empty;
                     progressBar1.Value = 0;
                     add_video.Enabled = true;
                     del_video.Enabled = true;
@@ -371,7 +389,7 @@ namespace YT_Downloader
             aboutus.ShowDialog();
         }
 
-        private async void öffnenToolStripMenuItem_Click(object sender, EventArgs e) // Textdatei importieren
+        private async void öffnenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
             String file = openFileDialog1.FileName;
@@ -384,6 +402,7 @@ namespace YT_Downloader
             {
                 try
                 {
+                    pictureBox2.Image = Properties.Resources.ping;
                     if (openedFile[i] != "")
                     {
                         download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + openedFile.Count() + " wird hinzugefügt";
@@ -400,17 +419,20 @@ namespace YT_Downloader
                 }
                 catch (ArgumentException)
                 {
-                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der Link ungültig ist
+                    pictureBox2.Image = Properties.Resources.error;
+                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
+                    pictureBox2.Image = Properties.Resources.error;
                     MessageBox.Show("Keine Internetverbindung!", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                 }
                 download_progress_label.Text = "Bitte Videos hinzufügen";
+                pictureBox2.Image = Properties.Resources.empty;
             }
         }
 
-        private void speichernToolStripMenuItem_Click(object sender, EventArgs e) // Textdatei exportieren
+        private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
             string savefilename = saveFileDialog1.FileName;
