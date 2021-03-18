@@ -217,8 +217,8 @@ namespace YT_Downloader
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
-                            pictureBox1.Image = Properties.Resources.imageres_23_8;
-                            pictureBox3.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = Properties.Resources.imageres_23_8;
+                            pictureBox1.Image = Properties.Resources.imageres_131_8;
                             await Task.Run(() =>
                             {
                                 conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + ".mp3", "mp3");
@@ -247,8 +247,8 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
-                            pictureBox1.Image = Properties.Resources.imageres_23_8;
-                            pictureBox3.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = Properties.Resources.imageres_23_8;
+                            pictureBox1.Image = Properties.Resources.imageres_131_8;
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
 
                             using (var client = new WebClient()) // Downloadet das Thumbnail
@@ -303,8 +303,8 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
-                            pictureBox1.Image = Properties.Resources.imageres_23_8;
-                            pictureBox3.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = Properties.Resources.imageres_23_8;
+                            pictureBox1.Image = Properties.Resources.imageres_131_8;
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
                             await Task.Run(() =>
                             {
