@@ -266,6 +266,7 @@
     <Compile Include="about.Designer.cs">
       <DependentUpon>about.cs</DependentUpon>
     </Compile>
+    <Compile Include="extractor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

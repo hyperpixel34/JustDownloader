@@ -37,6 +37,7 @@ namespace YT_Downloader
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@ namespace YT_Downloader
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Version 1.3";
+            this.label2.Text = "Version 1.5";
             // 
             // label3
             // 
@@ -109,11 +110,21 @@ namespace YT_Downloader
             this.linkLabel2.Text = "github.com/hyperpixel34/";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(91, 242);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(127, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Made with ❤ in Germany";
+            // 
             // about
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 240);
+            this.ClientSize = new System.Drawing.Size(334, 264);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel1);
@@ -144,5 +155,6 @@ namespace YT_Downloader
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Label label5;
     }
 }

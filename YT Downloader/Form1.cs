@@ -12,6 +12,7 @@ using MediaToolkit.Model;
 using MediaToolkit.Options;
 using System.Linq;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace YT_Downloader
 {
@@ -19,6 +20,9 @@ namespace YT_Downloader
     {
         private List<string> video_links = new List<string>();
         private List<string> openedFile = new List<string>();
+        public string formataudio = "mp3";
+
+
 
         public Form1()
         {
@@ -173,6 +177,15 @@ namespace YT_Downloader
                     audio_cover.Enabled = false;
                     download.Enabled = false;
                     YTMusic.Enabled = false;
+
+                    MP3.Enabled = false;
+                    WAV.Enabled = false;
+                    AIFF.Enabled = false;
+                    AAC.Enabled = false;
+                    WEBM.Enabled = false;
+                    FLAC.Enabled = false;
+                    OGG.Enabled = false;
+
                     if (video_btn.Checked)
                     {
                         for (int i = 0; i < video_links.Count; i++)
@@ -217,11 +230,11 @@ namespace YT_Downloader
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
-                            pictureBox3.Image = Properties.Resources.imageres_23_8;
-                            pictureBox1.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
+                            pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
                             await Task.Run(() =>
                             {
-                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + ".mp3", "mp3");
+                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}", formataudio);
                                 System.IO.File.Delete($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container);
                             });
                         }
@@ -247,8 +260,8 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
-                            pictureBox3.Image = Properties.Resources.imageres_23_8;
-                            pictureBox1.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
+                            pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
 
                             using (var client = new WebClient()) // Downloadet das Thumbnail
@@ -266,10 +279,10 @@ namespace YT_Downloader
                             await Task.Run(() =>
                             {
 
-                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + ".mp3", "mp3"); ; //https://www.youtube.com/watch?v=v8l_A5v8OTE
+                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}", formataudio); ; //https://www.youtube.com/watch?v=v8l_A5v8OTE
                                 if (System.IO.File.Exists($"{path.Text}\\maxresdefault.jpg") == true)
                                 {
-                                    TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\" + RemoveIllegalCharacters(title) + ".mp3");
+                                    TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}");
                                     Picture picture = new Picture($"{path.Text}\\maxresdefault.jpg");
                                     picture.Type = PictureType.FrontCover;
                                     picture.MimeType = "image/jpeg";
@@ -303,12 +316,12 @@ namespace YT_Downloader
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
-                            pictureBox3.Image = Properties.Resources.imageres_23_8;
-                            pictureBox1.Image = Properties.Resources.imageres_131_8;
+                            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
+                            pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
                             await Task.Run(() =>
                             {
-                                conversion.ConvertMedia($"{path.Text}\\{RemoveIllegalCharacters(title)}.{streamInfo.Container}", $"{path.Text}\\{RemoveIllegalCharacters(title)}.mp3", "mp3");
+                                conversion.ConvertMedia($"{path.Text}\\{RemoveIllegalCharacters(title)}.{streamInfo.Container}", $"{path.Text}\\{RemoveIllegalCharacters(title)}.{formataudio}", formataudio);
 
                                 using (var engine = new Engine())
                                 {
@@ -322,7 +335,7 @@ namespace YT_Downloader
                                 }
 
                                 // Cover hinzufügen
-                                TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\{RemoveIllegalCharacters(title)}.mp3");
+                                TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\{RemoveIllegalCharacters(title)}.{formataudio}");
                                 Picture picture = new Picture(string.Format("{0}\\maxresdefault.jpg", path.Text));
                                 picture.Type = PictureType.FrontCover;
                                 picture.MimeType = "image/jpeg";
@@ -340,8 +353,8 @@ namespace YT_Downloader
                     video_listbox.Items.Clear();
                     video_links.Clear();
                     pictureBox2.Image = Properties.Resources.success;
-                    pictureBox1.Image = Properties.Resources.connect_10201_10;
-                    pictureBox3.Image = Properties.Resources.imageres_109_13;
+                    pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
+                    pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
                     var result = MessageBox.Show("Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Information); // Zeigt eine Messagebox an
                     if (result == DialogResult.Yes)
                     {
@@ -359,6 +372,14 @@ namespace YT_Downloader
                     audio_cover.Enabled = true;
                     download.Enabled = true;
                     YTMusic.Enabled = true;
+
+                    MP3.Enabled = true;
+                    WAV.Enabled = true;
+                    AIFF.Enabled = true;
+                    AAC.Enabled = true;
+                    WEBM.Enabled = true;
+                    FLAC.Enabled = true;
+                    OGG.Enabled = true;
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
@@ -445,6 +466,41 @@ namespace YT_Downloader
                 System.Diagnostics.Debug.WriteLine(video_links[i]);
             }
             System.IO.File.WriteAllText(savefilename, video_links_formatted);
+        }
+
+        private void MP3_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "mp3";
+        }
+
+        private void WAV_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "wav";
+        }
+
+        private void AIFF_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "aiff";
+        }
+
+        private void AAC_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "aac";
+        }
+
+        private void FLAC_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "flac";
+        }
+
+        private void OGG_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "ogg";
+        }
+
+        private void WEBM_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "webm";
         }
     }
 }
