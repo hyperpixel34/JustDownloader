@@ -12,7 +12,7 @@ using MediaToolkit.Model;
 using MediaToolkit.Options;
 using System.Linq;
 using System.Diagnostics;
-using System.Drawing;
+using Octokit;
 
 namespace YT_Downloader
 {
@@ -26,6 +26,7 @@ namespace YT_Downloader
 
         public Form1()
         {
+            UpdateChecker();
             InitializeComponent();
             path.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos); // Einsetzen des Pfades zum Video Ordner in die path Listbox
         }
@@ -501,6 +502,25 @@ namespace YT_Downloader
         private void WEBM_CheckedChanged(object sender, EventArgs e)
         {
             formataudio = "webm";
+        }
+
+        private async System.Threading.Tasks.Task UpdateChecker()
+        {
+            Debug.WriteLine("Checke version");
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("JustDownloader"));
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("hyperpixel34", "JustDownloader");
+
+            //Setup the versions
+
+            if (releases[0].TagName != "V" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", ""))
+            {
+                var result = MessageBox.Show("Eine neuere Version \"" + releases[0].TagName + "\" ist verfügbar.\nSoll sie installiert werden? (Empfohlen)", "Update verfügbar!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("Updater.exe");
+                    Environment.Exit(0);
+                }
+            }
         }
     }
 }

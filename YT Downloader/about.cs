@@ -15,6 +15,7 @@ namespace YT_Downloader
         public about()
         {
             InitializeComponent();
+            label2.Text = "Version: "+System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0","");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

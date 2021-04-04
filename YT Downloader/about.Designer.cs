@@ -68,7 +68,7 @@ namespace YT_Downloader
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Version 1.5";
+            this.label2.Text = "Version 1.6";
             // 
             // label3
             // 
