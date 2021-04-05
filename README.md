@@ -1,5 +1,5 @@
 # JustDownloader
-
+[![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
 
 ![icon200](https://user-images.githubusercontent.com/80213902/110249657-6f4bb380-7f77-11eb-986b-d0990a8c8e9e.png)
 
