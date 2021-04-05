@@ -1,5 +1,5 @@
 # JustDownloader
-[![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/) ![Profile views](https://gpvc.arturio.dev/hyperpixel34) [![Discord](https://img.shields.io/discord/795590516691173376.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/NxRbMSdq9v)
+[![Github all releases](https://img.shields.io/github/downloads/hyperpixel34/JustDownloader/total.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/) ![Profile views](https://gpvc.arturio.dev/hyperpixel34) [![Discord](https://img.shields.io/discord/795590516691173376.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/NxRbMSdq9v)
 
 ![icon200](https://user-images.githubusercontent.com/80213902/110249657-6f4bb380-7f77-11eb-986b-d0990a8c8e9e.png)
 
