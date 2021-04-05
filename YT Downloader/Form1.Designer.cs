@@ -36,8 +36,6 @@ namespace YT_Downloader
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.öffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.überUnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -64,13 +62,15 @@ namespace YT_Downloader
             this.path = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.MP3 = new System.Windows.Forms.RadioButton();
-            this.WAV = new System.Windows.Forms.RadioButton();
-            this.AIFF = new System.Windows.Forms.RadioButton();
-            this.WEBM = new System.Windows.Forms.RadioButton();
-            this.FLAC = new System.Windows.Forms.RadioButton();
-            this.AAC = new System.Windows.Forms.RadioButton();
             this.OGG = new System.Windows.Forms.RadioButton();
+            this.AAC = new System.Windows.Forms.RadioButton();
+            this.FLAC = new System.Windows.Forms.RadioButton();
+            this.WEBM = new System.Windows.Forms.RadioButton();
+            this.AIFF = new System.Windows.Forms.RadioButton();
+            this.WAV = new System.Windows.Forms.RadioButton();
+            this.MP3 = new System.Windows.Forms.RadioButton();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.überUnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -116,31 +116,16 @@ namespace YT_Downloader
             // öffnenToolStripMenuItem
             // 
             this.öffnenToolStripMenuItem.Name = "öffnenToolStripMenuItem";
-            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.öffnenToolStripMenuItem.Text = "Importieren";
             this.öffnenToolStripMenuItem.Click += new System.EventHandler(this.öffnenToolStripMenuItem_Click);
             // 
             // speichernToolStripMenuItem
             // 
             this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
-            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.speichernToolStripMenuItem.Text = "Exportieren";
             this.speichernToolStripMenuItem.Click += new System.EventHandler(this.speichernToolStripMenuItem_Click);
-            // 
-            // überUnsToolStripMenuItem
-            // 
-            this.überUnsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoToolStripMenuItem});
-            this.überUnsToolStripMenuItem.Name = "überUnsToolStripMenuItem";
-            this.überUnsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.überUnsToolStripMenuItem.Text = "Über uns";
-            // 
-            // infoToolStripMenuItem
-            // 
-            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.infoToolStripMenuItem.Text = "Info";
-            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -203,7 +188,7 @@ namespace YT_Downloader
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(383, 327);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(54, 50);
@@ -221,7 +206,7 @@ namespace YT_Downloader
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(139, 327);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(54, 50);
@@ -363,7 +348,7 @@ namespace YT_Downloader
             // 
             // browse
             // 
-            this.browse.Image = extractor.GetIconFromGroup("explorer.exe", 101, 16).ToBitmap();
+            this.browse.Image = ((System.Drawing.Image)(resources.GetObject("browse.Image")));
             this.browse.Location = new System.Drawing.Point(536, 6);
             this.browse.Name = "browse";
             this.browse.Size = new System.Drawing.Size(32, 32);
@@ -407,6 +392,78 @@ namespace YT_Downloader
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Audioformat";
             // 
+            // OGG
+            // 
+            this.OGG.AutoSize = true;
+            this.OGG.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.OGG.Location = new System.Drawing.Point(99, 68);
+            this.OGG.Name = "OGG";
+            this.OGG.Size = new System.Drawing.Size(55, 18);
+            this.OGG.TabIndex = 6;
+            this.OGG.Text = "OGG";
+            this.OGG.UseVisualStyleBackColor = true;
+            this.OGG.CheckedChanged += new System.EventHandler(this.OGG_CheckedChanged);
+            // 
+            // AAC
+            // 
+            this.AAC.AutoSize = true;
+            this.AAC.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AAC.Location = new System.Drawing.Point(7, 92);
+            this.AAC.Name = "AAC";
+            this.AAC.Size = new System.Drawing.Size(52, 18);
+            this.AAC.TabIndex = 5;
+            this.AAC.Text = "AAC";
+            this.AAC.UseVisualStyleBackColor = true;
+            this.AAC.CheckedChanged += new System.EventHandler(this.AAC_CheckedChanged);
+            // 
+            // FLAC
+            // 
+            this.FLAC.AutoSize = true;
+            this.FLAC.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.FLAC.Location = new System.Drawing.Point(99, 44);
+            this.FLAC.Name = "FLAC";
+            this.FLAC.Size = new System.Drawing.Size(57, 18);
+            this.FLAC.TabIndex = 4;
+            this.FLAC.Text = "FLAC";
+            this.FLAC.UseVisualStyleBackColor = true;
+            this.FLAC.CheckedChanged += new System.EventHandler(this.FLAC_CheckedChanged);
+            // 
+            // WEBM
+            // 
+            this.WEBM.AutoSize = true;
+            this.WEBM.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.WEBM.Location = new System.Drawing.Point(99, 20);
+            this.WEBM.Name = "WEBM";
+            this.WEBM.Size = new System.Drawing.Size(65, 18);
+            this.WEBM.TabIndex = 3;
+            this.WEBM.Text = "WEBM";
+            this.WEBM.UseVisualStyleBackColor = true;
+            this.WEBM.CheckedChanged += new System.EventHandler(this.WEBM_CheckedChanged);
+            // 
+            // AIFF
+            // 
+            this.AIFF.AutoSize = true;
+            this.AIFF.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AIFF.Location = new System.Drawing.Point(7, 68);
+            this.AIFF.Name = "AIFF";
+            this.AIFF.Size = new System.Drawing.Size(53, 18);
+            this.AIFF.TabIndex = 2;
+            this.AIFF.Text = "AIFF";
+            this.AIFF.UseVisualStyleBackColor = true;
+            this.AIFF.CheckedChanged += new System.EventHandler(this.AIFF_CheckedChanged);
+            // 
+            // WAV
+            // 
+            this.WAV.AutoSize = true;
+            this.WAV.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.WAV.Location = new System.Drawing.Point(7, 44);
+            this.WAV.Name = "WAV";
+            this.WAV.Size = new System.Drawing.Size(56, 18);
+            this.WAV.TabIndex = 1;
+            this.WAV.Text = "WAV";
+            this.WAV.UseVisualStyleBackColor = true;
+            this.WAV.CheckedChanged += new System.EventHandler(this.WAV_CheckedChanged);
+            // 
             // MP3
             // 
             this.MP3.AutoSize = true;
@@ -421,77 +478,20 @@ namespace YT_Downloader
             this.MP3.UseVisualStyleBackColor = true;
             this.MP3.CheckedChanged += new System.EventHandler(this.MP3_CheckedChanged);
             // 
-            // WAV
+            // infoToolStripMenuItem
             // 
-            this.WAV.AutoSize = true;
-            this.WAV.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.WAV.Location = new System.Drawing.Point(7, 44);
-            this.WAV.Name = "WAV";
-            this.WAV.Size = new System.Drawing.Size(56, 18);
-            this.WAV.TabIndex = 1;
-            this.WAV.Text = "WAV";
-            this.WAV.UseVisualStyleBackColor = true;
-            this.WAV.CheckedChanged += new System.EventHandler(this.WAV_CheckedChanged);
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.infoToolStripMenuItem.Text = "Info";
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
-            // AIFF
+            // überUnsToolStripMenuItem
             // 
-            this.AIFF.AutoSize = true;
-            this.AIFF.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AIFF.Location = new System.Drawing.Point(7, 68);
-            this.AIFF.Name = "AIFF";
-            this.AIFF.Size = new System.Drawing.Size(53, 18);
-            this.AIFF.TabIndex = 2;
-            this.AIFF.Text = "AIFF";
-            this.AIFF.UseVisualStyleBackColor = true;
-            this.AIFF.CheckedChanged += new System.EventHandler(this.AIFF_CheckedChanged);
-            // 
-            // WEBM
-            // 
-            this.WEBM.AutoSize = true;
-            this.WEBM.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.WEBM.Location = new System.Drawing.Point(99, 20);
-            this.WEBM.Name = "WEBM";
-            this.WEBM.Size = new System.Drawing.Size(65, 18);
-            this.WEBM.TabIndex = 3;
-            this.WEBM.Text = "WEBM";
-            this.WEBM.UseVisualStyleBackColor = true;
-            this.WEBM.CheckedChanged += new System.EventHandler(this.WEBM_CheckedChanged);
-            // 
-            // FLAC
-            // 
-            this.FLAC.AutoSize = true;
-            this.FLAC.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.FLAC.Location = new System.Drawing.Point(99, 44);
-            this.FLAC.Name = "FLAC";
-            this.FLAC.Size = new System.Drawing.Size(57, 18);
-            this.FLAC.TabIndex = 4;
-            this.FLAC.Text = "FLAC";
-            this.FLAC.UseVisualStyleBackColor = true;
-            this.FLAC.CheckedChanged += new System.EventHandler(this.FLAC_CheckedChanged);
-            // 
-            // AAC
-            // 
-            this.AAC.AutoSize = true;
-            this.AAC.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AAC.Location = new System.Drawing.Point(7, 92);
-            this.AAC.Name = "AAC";
-            this.AAC.Size = new System.Drawing.Size(52, 18);
-            this.AAC.TabIndex = 5;
-            this.AAC.Text = "AAC";
-            this.AAC.UseVisualStyleBackColor = true;
-            this.AAC.CheckedChanged += new System.EventHandler(this.AAC_CheckedChanged);
-            // 
-            // OGG
-            // 
-            this.OGG.AutoSize = true;
-            this.OGG.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.OGG.Location = new System.Drawing.Point(99, 68);
-            this.OGG.Name = "OGG";
-            this.OGG.Size = new System.Drawing.Size(55, 18);
-            this.OGG.TabIndex = 6;
-            this.OGG.Text = "OGG";
-            this.OGG.UseVisualStyleBackColor = true;
-            this.OGG.CheckedChanged += new System.EventHandler(this.OGG_CheckedChanged);
+            this.überUnsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.infoToolStripMenuItem});
+            this.überUnsToolStripMenuItem.Name = "überUnsToolStripMenuItem";
+            this.überUnsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.überUnsToolStripMenuItem.Text = "Über uns";
             // 
             // Form1
             // 
@@ -535,8 +535,6 @@ namespace YT_Downloader
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem öffnenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem speichernToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem überUnsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -570,6 +568,8 @@ namespace YT_Downloader
         private System.Windows.Forms.RadioButton AIFF;
         private System.Windows.Forms.RadioButton WAV;
         private System.Windows.Forms.RadioButton MP3;
+        private System.Windows.Forms.ToolStripMenuItem überUnsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
     }
 }
 

@@ -327,12 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <None Include="Resources\imageres_131-8.png" />
-    <None Include="Resources\imageres_23-8.png" />
-    <None Include="Resources\imageres_109-131.png" />
-    <None Include="Resources\connect_10201-101.png" />
-    <None Include="Resources\connect_10201-10.png" />
-    <None Include="Resources\imageres_109-13.png" />
     <None Include="Resources\success.gif" />
     <None Include="Resources\download.gif" />
     <None Include="Resources\error.gif" />

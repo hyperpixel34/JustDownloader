@@ -29,6 +29,8 @@ namespace YT_Downloader
             UpdateChecker();
             InitializeComponent();
             path.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos); // Einsetzen des Pfades zum Video Ordner in die path Listbox
+            pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
+            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
         }
 
 
