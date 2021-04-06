@@ -12,6 +12,8 @@ using MediaToolkit.Model;
 using MediaToolkit.Options;
 using System.Linq;
 using System.Diagnostics;
+using Octokit;
+using System.Reflection;
 
 namespace YT_Downloader
 {
@@ -25,6 +27,7 @@ namespace YT_Downloader
 
         public Form1()
         {
+            UpdaterAsync();
             InitializeComponent();
             path.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos); // Einsetzen des Pfades zum Video Ordner in die path Listbox
             pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
@@ -502,6 +505,17 @@ namespace YT_Downloader
         private void WEBM_CheckedChanged(object sender, EventArgs e)
         {
             formataudio = "webm";
+        }
+        private async Task UpdaterAsync() // Auto Update funktion
+        {
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("SomeName"));
+            IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("hyperpixel34", "JustDownloader");
+
+            if ("V"+System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "") != releases[0].TagName)
+            {
+                System.Diagnostics.Process.Start("Updater.exe");
+                Environment.Exit(0);
+            }
         }
     }
 }
