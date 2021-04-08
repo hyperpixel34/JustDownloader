@@ -338,11 +338,38 @@ namespace YT_Downloader
                                     engine.GetThumbnail(mp4, outputFile, options);
                                 }
 
-                                // Cover hinzufügen
+                                // Cover und Infos hinzufügen
                                 TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\{RemoveIllegalCharacters(title)}.{formataudio}");
                                 Picture picture = new Picture(string.Format("{0}\\maxresdefault.jpg", path.Text));
                                 picture.Type = PictureType.FrontCover;
                                 picture.MimeType = "image/jpeg";
+                                trackFile.Tag.Title = video.Title;
+                                trackFile.Tag.Album = "Single";
+                                trackFile.Tag.Artists = new string[1] { video.Author.Replace(" - Topic","") }; 
+                                trackFile.Tag.Performers = new string[1] { video.Author.Replace(" - Topic", "") };
+                                string[] desc = video.Description.Split('\n');
+                                uint year;
+                                for (int a = 0; a<desc.Length; a++)
+                                {
+
+                                    if (desc[a].Contains("℗"))
+                                    {
+                                        try
+                                        {
+                                            year = (uint)Convert.ToInt32(desc[a].Substring(2, 4));
+                                            trackFile.Tag.Year = year;
+                                        }
+                                        catch
+                                        {
+                                        }
+                                    }
+                                    else if (desc[a].Contains("Released on:"))
+                                    {
+                                        year = (uint)Convert.ToInt32(desc[a].Substring(13, 4));
+                                        trackFile.Tag.Year = year;
+                                    }
+                                    
+                                }
                                 trackFile.Tag.Pictures = new TagLib.IPicture[1] { picture };
                                 trackFile.Save();
 
@@ -472,6 +499,7 @@ namespace YT_Downloader
             System.IO.File.WriteAllText(savefilename, video_links_formatted);
         }
 
+        #region Dateiformat
         private void MP3_CheckedChanged(object sender, EventArgs e)
         {
             formataudio = "mp3";
@@ -506,6 +534,8 @@ namespace YT_Downloader
         {
             formataudio = "webm";
         }
+
+        #endregion
         private async Task UpdaterAsync() // Auto Update funktion
         {
             GitHubClient client = new GitHubClient(new ProductHeaderValue("SomeName"));
