@@ -36,6 +36,8 @@ namespace YT_Downloader
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.öffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.überUnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -61,6 +63,13 @@ namespace YT_Downloader
             this.browse = new System.Windows.Forms.Button();
             this.path = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.FLV = new System.Windows.Forms.RadioButton();
+            this.MPEG = new System.Windows.Forms.RadioButton();
+            this.MOV = new System.Windows.Forms.RadioButton();
+            this.WEBM_VIDEO = new System.Windows.Forms.RadioButton();
+            this.AVI = new System.Windows.Forms.RadioButton();
+            this.MP4 = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.OGG = new System.Windows.Forms.RadioButton();
             this.AAC = new System.Windows.Forms.RadioButton();
@@ -69,8 +78,6 @@ namespace YT_Downloader
             this.AIFF = new System.Windows.Forms.RadioButton();
             this.WAV = new System.Windows.Forms.RadioButton();
             this.MP3 = new System.Windows.Forms.RadioButton();
-            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.überUnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -80,6 +87,7 @@ namespace YT_Downloader
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.format.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,16 +124,31 @@ namespace YT_Downloader
             // öffnenToolStripMenuItem
             // 
             this.öffnenToolStripMenuItem.Name = "öffnenToolStripMenuItem";
-            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.öffnenToolStripMenuItem.Text = "Importieren";
             this.öffnenToolStripMenuItem.Click += new System.EventHandler(this.öffnenToolStripMenuItem_Click);
             // 
             // speichernToolStripMenuItem
             // 
             this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
-            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.speichernToolStripMenuItem.Text = "Exportieren";
             this.speichernToolStripMenuItem.Click += new System.EventHandler(this.speichernToolStripMenuItem_Click);
+            // 
+            // überUnsToolStripMenuItem
+            // 
+            this.überUnsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.infoToolStripMenuItem});
+            this.überUnsToolStripMenuItem.Name = "überUnsToolStripMenuItem";
+            this.überUnsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.überUnsToolStripMenuItem.Text = "Über uns";
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.infoToolStripMenuItem.Text = "Info";
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -367,6 +390,7 @@ namespace YT_Downloader
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -375,6 +399,95 @@ namespace YT_Downloader
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Optionen";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.FLV);
+            this.groupBox2.Controls.Add(this.MPEG);
+            this.groupBox2.Controls.Add(this.MOV);
+            this.groupBox2.Controls.Add(this.WEBM_VIDEO);
+            this.groupBox2.Controls.Add(this.AVI);
+            this.groupBox2.Controls.Add(this.MP4);
+            this.groupBox2.Location = new System.Drawing.Point(179, 7);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(164, 116);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Videoformat";
+            // 
+            // FLV
+            // 
+            this.FLV.AutoSize = true;
+            this.FLV.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.FLV.Location = new System.Drawing.Point(99, 68);
+            this.FLV.Name = "FLV";
+            this.FLV.Size = new System.Drawing.Size(50, 18);
+            this.FLV.TabIndex = 5;
+            this.FLV.Text = "FLV";
+            this.FLV.UseVisualStyleBackColor = true;
+            this.FLV.CheckedChanged += new System.EventHandler(this.FLV_CheckedChanged);
+            // 
+            // MPEG
+            // 
+            this.MPEG.AutoSize = true;
+            this.MPEG.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MPEG.Location = new System.Drawing.Point(99, 44);
+            this.MPEG.Name = "MPEG";
+            this.MPEG.Size = new System.Drawing.Size(62, 18);
+            this.MPEG.TabIndex = 4;
+            this.MPEG.Text = "MPEG";
+            this.MPEG.UseVisualStyleBackColor = true;
+            this.MPEG.CheckedChanged += new System.EventHandler(this.MPEG_CheckedChanged);
+            // 
+            // MOV
+            // 
+            this.MOV.AutoSize = true;
+            this.MOV.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MOV.Location = new System.Drawing.Point(99, 20);
+            this.MOV.Name = "MOV";
+            this.MOV.Size = new System.Drawing.Size(55, 18);
+            this.MOV.TabIndex = 3;
+            this.MOV.Text = "MOV";
+            this.MOV.UseVisualStyleBackColor = true;
+            this.MOV.CheckedChanged += new System.EventHandler(this.MOV_CheckedChanged);
+            // 
+            // WEBM_VIDEO
+            // 
+            this.WEBM_VIDEO.AutoSize = true;
+            this.WEBM_VIDEO.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.WEBM_VIDEO.Location = new System.Drawing.Point(7, 68);
+            this.WEBM_VIDEO.Name = "WEBM_VIDEO";
+            this.WEBM_VIDEO.Size = new System.Drawing.Size(65, 18);
+            this.WEBM_VIDEO.TabIndex = 2;
+            this.WEBM_VIDEO.Text = "WEBM";
+            this.WEBM_VIDEO.UseVisualStyleBackColor = true;
+            this.WEBM_VIDEO.CheckedChanged += new System.EventHandler(this.WEBM_VIDEO_CheckedChanged);
+            // 
+            // AVI
+            // 
+            this.AVI.AutoSize = true;
+            this.AVI.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AVI.Location = new System.Drawing.Point(7, 44);
+            this.AVI.Name = "AVI";
+            this.AVI.Size = new System.Drawing.Size(48, 18);
+            this.AVI.TabIndex = 1;
+            this.AVI.Text = "AVI";
+            this.AVI.UseVisualStyleBackColor = true;
+            this.AVI.CheckedChanged += new System.EventHandler(this.AVI_CheckedChanged);
+            // 
+            // MP4
+            // 
+            this.MP4.AutoSize = true;
+            this.MP4.Checked = true;
+            this.MP4.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MP4.Location = new System.Drawing.Point(7, 20);
+            this.MP4.Name = "MP4";
+            this.MP4.Size = new System.Drawing.Size(53, 18);
+            this.MP4.TabIndex = 0;
+            this.MP4.TabStop = true;
+            this.MP4.Text = "MP4";
+            this.MP4.UseVisualStyleBackColor = true;
+            this.MP4.CheckedChanged += new System.EventHandler(this.MP4_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -387,7 +500,7 @@ namespace YT_Downloader
             this.groupBox1.Controls.Add(this.MP3);
             this.groupBox1.Location = new System.Drawing.Point(9, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 139);
+            this.groupBox1.Size = new System.Drawing.Size(164, 116);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Audioformat";
@@ -478,21 +591,6 @@ namespace YT_Downloader
             this.MP3.UseVisualStyleBackColor = true;
             this.MP3.CheckedChanged += new System.EventHandler(this.MP3_CheckedChanged);
             // 
-            // infoToolStripMenuItem
-            // 
-            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.infoToolStripMenuItem.Text = "Info";
-            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
-            // 
-            // überUnsToolStripMenuItem
-            // 
-            this.überUnsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoToolStripMenuItem});
-            this.überUnsToolStripMenuItem.Name = "überUnsToolStripMenuItem";
-            this.überUnsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.überUnsToolStripMenuItem.Text = "Über uns";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -521,6 +619,8 @@ namespace YT_Downloader
             this.format.ResumeLayout(false);
             this.format.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -570,6 +670,13 @@ namespace YT_Downloader
         private System.Windows.Forms.RadioButton MP3;
         private System.Windows.Forms.ToolStripMenuItem überUnsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton FLV;
+        private System.Windows.Forms.RadioButton MPEG;
+        private System.Windows.Forms.RadioButton MOV;
+        private System.Windows.Forms.RadioButton WEBM_VIDEO;
+        private System.Windows.Forms.RadioButton AVI;
+        private System.Windows.Forms.RadioButton MP4;
     }
 }
 

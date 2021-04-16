@@ -13,7 +13,8 @@ using MediaToolkit.Options;
 using System.Linq;
 using System.Diagnostics;
 using Octokit;
-using System.Reflection;
+using NReco.VideoConverter;
+using System.Globalization;
 
 namespace YT_Downloader
 {
@@ -22,7 +23,8 @@ namespace YT_Downloader
         private List<string> video_links = new List<string>();
         private List<string> openedFile = new List<string>();
         public string formataudio = "mp3";
-
+        public string formatvideo = "mp4";
+        public string[] langpack;
 
 
         public Form1()
@@ -32,8 +34,30 @@ namespace YT_Downloader
             path.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos); // Einsetzen des Pfades zum Video Ordner in die path Listbox
             pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
             pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
+            if (CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "de")
+            {
+                langpack = new string[] { "Das ist kein YouTube Video", "Fehler", "Keine Internetverbindung!", "Zugriff verweigert", "Bitte warten...", "Video ", " von ", " wird heruntergeladen", " wird konvertiert", "Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", " wird hinzugefügt", "Ein Update ist verfügbar.\nSoll es heruntergeladen werden?", "Update verfügbar", "Bitte Videos hinzufügen", "Über uns", "Datei", "Importieren", "Exportieren", "Video mit Audiospur", "Nur Audio", "Audio mit Cover", "YouTube Music", "Pfad: ", "Audioformat", "Videoformat", "Download", "Optionen", "Format" };
+            }
+            else
+            {
+                langpack = new string[] { "This is not a YouTube video", "Error", "No internet connection!", "Access denied", "Please wait...", "Video ", " from ", " being downloaded", " being converted", "Download completed successfully.\nShould the output folder be opened? ", " is added", "An update is available.\nShould it be downloaded?", "Update available", "Please add some videos", "About Us", "File", "Import", "Export", "Video with audio track", "Audio only", "Audio with cover", "YouTube Music", "Path: ", "Audio format", "Video format", "Download", "Optionen", "Format" };
+            }
+            download_progress_label.Text = langpack[13];
+            überUnsToolStripMenuItem.Text = langpack[14];
+            dateiToolStripMenuItem.Text = langpack[15];
+            öffnenToolStripMenuItem.Text = langpack[16];
+            speichernToolStripMenuItem.Text = langpack[17];
+            video_btn.Text = langpack[18];
+            audio_btn.Text = langpack[19];
+            audio_cover.Text = langpack[20];
+            YTMusic.Text = langpack[21];
+            label2.Text = langpack[22];
+            groupBox1.Text = langpack[23];
+            groupBox2.Text = langpack[24];
+            tabPage1.Text = langpack[25];
+            tabPage2.Text = langpack[26];
+            format.Text = langpack[27];
         }
-
 
         public static string RemoveIllegalCharacters(String path) // Methode zum löschen von unzulässigen Zeichen im Pfad
         {
@@ -137,12 +161,12 @@ namespace YT_Downloader
                 catch (ArgumentException)
                 {
                     pictureBox2.Image = Properties.Resources.error;
-                    MessageBox.Show("Das ist kein YouTube Video", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
+                    MessageBox.Show(langpack[0], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
                     pictureBox2.Image = Properties.Resources.error;
-                    MessageBox.Show("Keine Internetverbindung!", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
+                    MessageBox.Show(langpack[2], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                 }
             pictureBox2.Image = Properties.Resources.empty;
         }
@@ -190,12 +214,19 @@ namespace YT_Downloader
                     FLAC.Enabled = false;
                     OGG.Enabled = false;
 
+                    MP4.Enabled = false;
+                    FLV.Enabled = false;
+                    AVI.Enabled = false;
+                    MOV.Enabled = false;
+                    WEBM_VIDEO.Enabled = false;
+                    MPEG.Enabled = false;
+
                     if (video_btn.Checked)
                     {
                         for (int i = 0; i < video_links.Count; i++)
                         {
                             pictureBox2.Image = Properties.Resources.download;
-                            download_progress_label.Text = "Bitte warten...";
+                            download_progress_label.Text = langpack[4];
                             var youtube = new YoutubeClient();
 
                             // Ermittelt Videoinformationen
@@ -203,12 +234,25 @@ namespace YT_Downloader
                             var streamManifest = await youtube.Videos.Streams.GetManifestAsync(video_links[i]);
                             var video = await youtube.Videos.GetAsync(video_links[i]);
                             var streamInfo = streamManifest.GetMuxed().WithHighestVideoQuality();
+
                             var title = video.Title;
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download 
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird heruntergeladen";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
                             await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
+                            if (!MP4.Checked)
+                            {
+                                download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
+                                var conversion = new NReco.VideoConverter.FFMpegConverter();
+                                pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 134, 48).ToBitmap();
+                                pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
+                                await Task.Run(() =>
+                                {
+                                    conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formatvideo}", formatvideo);
+                                    System.IO.File.Delete($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container);
+                                });
+                            }
                         }
 
                     }
@@ -217,7 +261,7 @@ namespace YT_Downloader
                         for (int i = 0; i < video_links.Count; i++)
                         {
                             pictureBox2.Image = Properties.Resources.download;
-                            download_progress_label.Text = "Bitte warten...";
+                            download_progress_label.Text = langpack[4];
                             var youtube = new YoutubeClient();
 
                             // Ermittelt Videoinformationen
@@ -228,11 +272,11 @@ namespace YT_Downloader
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download (nur Audiospur)
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird heruntergeladen";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
                             await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
                             pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
                             pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
@@ -248,7 +292,7 @@ namespace YT_Downloader
                         for (int i = 0; i < video_links.Count; i++)
                         {
                             pictureBox2.Image = Properties.Resources.download;
-                            download_progress_label.Text = "Bitte warten...";
+                            download_progress_label.Text = langpack[4];
                             var youtube = new YoutubeClient();
 
                             // Ermittelt Videoinformationen
@@ -259,11 +303,11 @@ namespace YT_Downloader
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download (Nur Audiospur)
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird heruntergeladen";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
                             await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
                             pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
                             pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
@@ -286,6 +330,8 @@ namespace YT_Downloader
                                 conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}", formataudio); ; //https://www.youtube.com/watch?v=v8l_A5v8OTE
                                 if (System.IO.File.Exists($"{path.Text}\\maxresdefault.jpg") == true)
                                 {
+                                    TagLib.Id3v2.Tag.DefaultVersion = 3;
+                                    TagLib.Id3v2.Tag.ForceDefaultVersion = true;
                                     TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}");
                                     Picture picture = new Picture($"{path.Text}\\maxresdefault.jpg");
                                     picture.Type = PictureType.FrontCover;
@@ -304,7 +350,7 @@ namespace YT_Downloader
                         for (int i = 0; i < video_links.Count; i++)
                         {
                             pictureBox2.Image = Properties.Resources.download;
-                            download_progress_label.Text = "Bitte warten...";
+                            download_progress_label.Text = langpack[4];
                             var youtube = new YoutubeClient();
 
                             // Ermittelt Videoinformationen
@@ -315,11 +361,11 @@ namespace YT_Downloader
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird heruntergeladen";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
                             await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\{RemoveIllegalCharacters(title)}.{streamInfo.Container}", progressHandler);
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
-                            download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + video_links.Count + " wird konvertiert";
+                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
                             pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
                             pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
                             var conversion = new NReco.VideoConverter.FFMpegConverter();
@@ -339,15 +385,25 @@ namespace YT_Downloader
                                 }
 
                                 // Cover und Infos hinzufügen
+                                TagLib.Id3v2.Tag.DefaultVersion = 3;
+                                TagLib.Id3v2.Tag.ForceDefaultVersion = true;
                                 TagLib.File trackFile = TagLib.File.Create($"{path.Text}\\{RemoveIllegalCharacters(title)}.{formataudio}");
                                 Picture picture = new Picture(string.Format("{0}\\maxresdefault.jpg", path.Text));
+                                string[] desc = video.Description.Split('\n');
                                 picture.Type = PictureType.FrontCover;
                                 picture.MimeType = "image/jpeg";
                                 trackFile.Tag.Title = video.Title;
-                                trackFile.Tag.Album = "Single";
+                                try
+                                {
+                                    trackFile.Tag.Album = desc[4];
+                                }
+                                catch
+                                {
+
+                                }
                                 trackFile.Tag.Artists = new string[1] { video.Author.Replace(" - Topic","") }; 
                                 trackFile.Tag.Performers = new string[1] { video.Author.Replace(" - Topic", "") };
-                                string[] desc = video.Description.Split('\n');
+                                
                                 uint year;
                                 for (int a = 0; a<desc.Length; a++)
                                 {
@@ -379,14 +435,14 @@ namespace YT_Downloader
                         }
                     }
 
-                    download_progress_label.Text = "Bitte Videos Einfügen";
+                    download_progress_label.Text = langpack[13];
                     // Löscht alle Items aus video_listbox und video_links
                     video_listbox.Items.Clear();
                     video_links.Clear();
                     pictureBox2.Image = Properties.Resources.success;
                     pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
                     pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
-                    var result = MessageBox.Show("Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Information); // Zeigt eine Messagebox an
+                    var result = MessageBox.Show(langpack[9], "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Information); // Zeigt eine Messagebox an
                     if (result == DialogResult.Yes)
                     {
                         System.Diagnostics.Process.Start("explorer.exe", path.Text); // Wenn beim letzten Dialog mit Ja geantwortet wurde, wird der Downloadordner geöffnet
@@ -411,15 +467,23 @@ namespace YT_Downloader
                     WEBM.Enabled = true;
                     FLAC.Enabled = true;
                     OGG.Enabled = true;
+
+                    MP4.Enabled = true;
+                    FLV.Enabled = true;
+                    AVI.Enabled = true;
+                    MOV.Enabled = true;
+                    WEBM.Enabled = true;
+                    MPEG.Enabled = true;
+                    WEBM_VIDEO.Enabled = true;
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
-                    MessageBox.Show("Keine Internetverbindung!", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
+                    MessageBox.Show(langpack[2], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                     download_progress_label.Text = "";
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    MessageBox.Show("Zugriff verweigert", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
+                    MessageBox.Show(langpack[3], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                     download_progress_label.Text = "";
                 }
             });
@@ -457,7 +521,7 @@ namespace YT_Downloader
                     pictureBox2.Image = Properties.Resources.ping;
                     if (openedFile[i] != "")
                     {
-                        download_progress_label.Text = "Video " + (Convert.ToInt32(i) + 1) + " von " + openedFile.Count() + " wird hinzugefügt";
+                        download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + openedFile.Count() + langpack[10];
                         var youtube = new YoutubeClient();
                         // Ermittelt Videoinformationen wie z.B. Name 
                         var video = await youtube.Videos.GetAsync(openedFile[i]);
@@ -472,14 +536,14 @@ namespace YT_Downloader
                 catch (ArgumentException)
                 {
                     pictureBox2.Image = Properties.Resources.error;
-                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
+                    MessageBox.Show("Das ist kein YouTube Video\n"+openedFile[i], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn der eingegebene Link ungültig ist
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
                     pictureBox2.Image = Properties.Resources.error;
-                    MessageBox.Show("Keine Internetverbindung!", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
+                    MessageBox.Show(langpack[2], langpack[1], MessageBoxButtons.OK, MessageBoxIcon.Error); // Messagebox die sich öffnet wenn keine Internetverbindung verfügbar ist
                 }
-                download_progress_label.Text = "Bitte Videos hinzufügen";
+                download_progress_label.Text = langpack[13];
                 pictureBox2.Image = Properties.Resources.empty;
             }
         }
@@ -543,9 +607,43 @@ namespace YT_Downloader
 
             if ("V"+System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "") != releases[0].TagName)
             {
-                System.Diagnostics.Process.Start("Updater.exe");
-                Environment.Exit(0);
+                var result = MessageBox.Show(langpack[11],langpack[12], MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("Updater.exe");
+                    Environment.Exit(0);
+                }
             }
+        }
+
+        private void MP4_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "mp4";
+        }
+
+        private void AVI_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "avi";
+        }
+
+        private void WEBM_VIDEO_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "webm";
+        }
+
+        private void FLV_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "flv";
+        }
+
+        private void MOV_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "mov";
+        }
+
+        private void MPEG_CheckedChanged(object sender, EventArgs e)
+        {
+            formatvideo = "mpeg";
         }
     }
 }
