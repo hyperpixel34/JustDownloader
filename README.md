@@ -3,25 +3,24 @@
 
 ![icon200](https://user-images.githubusercontent.com/80213902/110249657-6f4bb380-7f77-11eb-986b-d0990a8c8e9e.png)
 
-JustDownloader ist ein kostenloser YouTube Downloader ohne Werbung.
-Er kann sowohl Videos als auch Audios herunterladen.
+JustDownloader is a free YouTube Downloader without advertisement.
+It can download both videos and audios.
 
 Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
 # Installation
 
-ZIP Archiv entpacken und im entpacktem Ordner enthaltene
-JustDownloader.exe ausführen
+Extract ZIP archive and run JustDownloader.exe
 
 # Features
 
-- Download von Videos (720p)
-- Download von Audios (mp3)
-- Download von Audios mit Cover (Thumbnail)
-- Download von YouTube Music
+- Download videos (720p)
+- Download audios (mp3)
+- Download audios with cover (Thumbnail)
+- Download from YouTube Music
 
 # Screenshots
 
-![image](https://user-images.githubusercontent.com/80213902/113129324-0cb6a200-921b-11eb-8391-cac83d757ec9.png)
+![image](https://user-images.githubusercontent.com/80213902/115066254-917a0f00-9eef-11eb-86bc-7159b33bd0cc.png)
 
-![image](https://user-images.githubusercontent.com/80213902/113129467-38d22300-921b-11eb-8734-5aa934dc3a62.png)
+![image](https://user-images.githubusercontent.com/80213902/115066349-b078a100-9eef-11eb-9912-679a9e78ffc5.png)
