@@ -10,6 +10,7 @@ Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
 # Languages
 English (English)
+
 German (Deutsch)
 
 # Installation
