@@ -8,6 +8,10 @@ It can download both videos and audios.
 
 Download: https://github.com/hyperpixel34/JustDownloader/releases/
 
+# Languages
+English (English)
+German (Deutsch)
+
 # Installation
 
 Extract ZIP archive and run JustDownloader.exe
