@@ -28,4 +28,4 @@ Extract ZIP archive and run JustDownloader.exe
 
 ![image](https://user-images.githubusercontent.com/80213902/115149557-facf5e80-a064-11eb-87e3-c904c36393d1.png)
 
-![image](https://user-images.githubusercontent.com/80213902/115066349-b078a100-9eef-11eb-9912-679a9e78ffc5.png)
+![image](https://user-images.githubusercontent.com/80213902/127990950-c2ba12bf-878a-4f98-81f0-41300d06bcae.png)
