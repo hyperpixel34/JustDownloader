@@ -13,9 +13,10 @@ using MediaToolkit.Options;
 using System.Linq;
 using System.Diagnostics;
 using Octokit;
-using NReco.VideoConverter;
 using System.Globalization;
 using YoutubeExplode.Common;
+using YoutubeExplode.Converter;
+using System.IO;
 
 namespace YT_Downloader
 {
@@ -24,6 +25,7 @@ namespace YT_Downloader
         private List<string> video_links = new List<string>();
         public string formataudio = "mp3";
         public string formatvideo = "mp4";
+        public string videoQuality = "720p";
         public string[] langpack;
 
 
@@ -34,14 +36,21 @@ namespace YT_Downloader
             path.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos); // Einsetzen des Pfades zum Video Ordner in die path Listbox
             pictureBox1.Image = extractor.GetIconFromGroup("connect.dll", 10201, 48).ToBitmap();
             pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 109, 48).ToBitmap();
+
             if (CultureInfo.CurrentCulture.ToString().Substring(0, 2) == "de")
             {
-                langpack = new string[] { "Das ist kein YouTube Video", "Fehler", "Keine Internetverbindung!", "Zugriff verweigert", "Bitte warten...", "Video ", " von ", " wird heruntergeladen", " wird konvertiert", "Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", " wird hinzugefügt", "Ein Update ist verfügbar.\nSoll es heruntergeladen werden?", "Update verfügbar", "Bitte Videos hinzufügen", "Über uns", "Datei", "Importieren", "Exportieren", "Video mit Audiospur", "Nur Audio", "Audio mit Cover", "YouTube Music", "Pfad: ", "Audioformat", "Videoformat", "Download", "Optionen", "Format" };
+                langpack = new string[] { "Das ist kein YouTube Video", "Fehler", "Keine Internetverbindung!", "Zugriff verweigert", "Bitte warten...", "Video ", " von ", " wird heruntergeladen", " wird konvertiert", "Das Herunterladen wurde erfolgreich abgeschlossen.\nSoll der Ausgabeordner geöffnet werden?", " wird hinzugefügt", "Ein Update ist verfügbar.\nSoll es heruntergeladen werden?", "Update verfügbar", "Bitte Videos hinzufügen", "Über uns", "Datei", "Importieren", "Exportieren", "Video mit Audiospur", "Nur Audio", "Audio mit Cover", "YouTube Music", "Pfad: ", "Audioformat", "Videoformat", "Download", "Optionen", "Format", "Qualität", "Untertitel", "Untertitel herunterladen" };
             }
             else
             {
-                langpack = new string[] { "This is not a YouTube video", "Error", "No internet connection!", "Access denied", "Please wait...", "Video ", " from ", " being downloaded", " being converted", "Download completed successfully.\nShould the output folder be opened? ", " is added", "An update is available.\nShould it be downloaded?", "Update available", "Please add some videos", "About Us", "File", "Import", "Export", "Video with audio track", "Audio only", "Audio with cover", "YouTube Music", "Path: ", "Audio format", "Video format", "Download", "Options", "Format" };
+                langpack = new string[] { "This is not a YouTube video", "Error", "No internet connection!", "Access denied", "Please wait...", "Video ", " from ", " being downloaded", " being converted", "Download completed successfully.\nShould the output folder be opened? ", " is added", "An update is available.\nShould it be downloaded?", "Update available", "Please add some videos", "About Us", "File", "Import", "Export", "Video with audio track", "Audio only", "Audio with cover", "YouTube Music", "Path: ", "Audio format", "Video format", "Download", "Options", "Format", "Quality", "Subtitles", "Download Subtitles" };
             }
+
+            foreach (CultureInfo c in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
+            {
+                comboBox1.Items.Add(c.DisplayName);
+            }
+
             download_progress_label.Text = langpack[13];
             überUnsToolStripMenuItem.Text = langpack[14];
             dateiToolStripMenuItem.Text = langpack[15];
@@ -57,6 +66,9 @@ namespace YT_Downloader
             tabPage1.Text = langpack[25];
             tabPage2.Text = langpack[26];
             format.Text = langpack[27];
+            quality.Text = langpack[28];
+            subtitles.Text = langpack[29];
+            dl_sub.Text = langpack[30];
         }
 
         public static string RemoveIllegalCharacters(String path) // Methode zum löschen von unzulässigen Zeichen im Pfad
@@ -233,7 +245,6 @@ namespace YT_Downloader
                     MP3.Enabled = false;
                     WAV.Enabled = false;
                     AIFF.Enabled = false;
-                    AAC.Enabled = false;
                     WEBM.Enabled = false;
                     FLAC.Enabled = false;
                     OGG.Enabled = false;
@@ -244,6 +255,13 @@ namespace YT_Downloader
                     MOV.Enabled = false;
                     WEBM_VIDEO.Enabled = false;
                     MPEG.Enabled = false;
+                    radioButton1.Enabled = false;
+                    radioButton2.Enabled = false;
+                    radioButton3.Enabled = false;
+                    radioButton4.Enabled = false;
+                    radioButton5.Enabled = false;
+                    radioButton6.Enabled = false;
+                    radioButton7.Enabled = false;
 
                     if (video_btn.Checked)
                     {
@@ -254,32 +272,73 @@ namespace YT_Downloader
                             var youtube = new YoutubeClient();
 
                             // Ermittelt Videoinformationen
-                            Debug.WriteLine(video_links[i]);
+
                             var streamManifest = await youtube.Videos.Streams.GetManifestAsync(video_links[i]);
                             var video = await youtube.Videos.GetAsync(video_links[i]);
-                            var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+                            var audioInfo = streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate();
+
+                            IVideoStreamInfo streamInfo;
+
+                            try
+                            {
+                                streamInfo = streamManifest.GetVideoStreams().First(s => s.VideoQuality.Label == videoQuality);
+                            }
+                            catch
+                            {
+                                streamInfo = streamManifest.GetVideoStreams().GetWithHighestVideoQuality();
+                            }
 
                             var title = video.Title;
+                            var streamInfos = new IStreamInfo[] { audioInfo, streamInfo };
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download 
                             download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
-                            await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
-                            if (!MP4.Checked)
-                            {
-                                download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
-                                var conversion = new NReco.VideoConverter.FFMpegConverter();
-                                pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 134, 48).ToBitmap();
-                                pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
-                                await Task.Run(() =>
-                                {
-                                    conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formatvideo}", formatvideo);
-                                    System.IO.File.Delete($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container);
-                                });
-                            }
-                        }
 
+                            string videoPath;
+
+                            if (videoQuality == "2160p")
+                            {
+                                await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".webm").Build(), progressHandler);
+                                videoPath = $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".webm";
+                            }
+                            else
+                            {
+                                await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formatvideo}").Build(), progressHandler);
+                                videoPath = $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formatvideo}";
+                            }
+
+                            if (dl_sub.Checked)
+                            {
+                                var srt = await youtube.Videos.ClosedCaptions.GetManifestAsync(video_links[i]);
+                                string langCode = CultureInfo.GetCultures(CultureTypes.AllCultures).FirstOrDefault(c => c.DisplayName == comboBox1.Text).Name;
+
+                                var info = srt.TryGetByLanguage(langCode);
+
+                                if (info != null)
+                                {                                    
+                                    await youtube.Videos.ClosedCaptions.DownloadAsync(info, "cc.srt");
+                                    //Clipboard.SetText($"\"{Directory.GetCurrentDirectory()}\\ffmpeg.exe\" -y -i \"{videoPath}\" -filter:v subtitles=\"{"cc.srt"}\" \"{$"{path.Text}\\" + RemoveIllegalCharacters(title) + $"_srt.{formatvideo}"}\"");
+                                    ProcessStartInfo cmdi = new ProcessStartInfo($"{Directory.GetCurrentDirectory()}\\ffmpeg.exe");
+                                    cmdi.CreateNoWindow = true;
+                                    cmdi.WindowStyle = ProcessWindowStyle.Hidden;
+                                    cmdi.Arguments = $"-y -i \"{videoPath}\" -filter:v subtitles=\"{"cc.srt"}\" \"{$"{path.Text}\\" + RemoveIllegalCharacters(title) + $"_srt.{formatvideo}"}\"";
+                                    await Task.Run(() =>
+                                    {
+                                        Process cmd = Process.Start(cmdi);
+                                        cmd.WaitForExit();
+                                    });
+                                    System.IO.File.Delete(videoPath);
+                                    //System.IO.File.Delete("cc.srt");
+                                }
+                            }
+
+                            // https://www.youtube.com/watch?v=xk0Cbdvq-oc
+                            // https://www.youtube.com/watch?v=5tK_3s-74r4
+                            // https://www.youtube.com/watch?v=DNYwaCL8krE
+                        }
                     }
+
                     if (audio_btn.Checked)
                     {
                         for (int i = 0; i < video_links.Count; i++)
@@ -291,27 +350,22 @@ namespace YT_Downloader
                             // Ermittelt Videoinformationen
                             var streamManifest = await youtube.Videos.Streams.GetManifestAsync(video_links[i]);
                             var video = await youtube.Videos.GetAsync(video_links[i]);
-                            var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+                            var streamInfo = streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate();
+                            var streamInfos = new IStreamInfo[] { streamInfo };
 
                             var title = video.Title;
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download (nur Audiospur)
                             download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
-                            await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
+                            MessageBox.Show(formataudio);
+                            await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}").Build(), progressHandler);
 
                             // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
                             download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
-                            var conversion = new NReco.VideoConverter.FFMpegConverter();
-                            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
-                            pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
-                            await Task.Run(() =>
-                            {
-                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}", formataudio);
-                                System.IO.File.Delete($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container);
-                            });
                         }
                     }
+
                     if (audio_cover.Checked)
                     {
                         for (int i = 0; i < video_links.Count; i++)
@@ -323,20 +377,15 @@ namespace YT_Downloader
                             // Ermittelt Videoinformationen
                             var streamManifest = await youtube.Videos.Streams.GetManifestAsync(video_links[i]);
                             var video = await youtube.Videos.GetAsync(video_links[i]);
-                            var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+                            var streamInfo = streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate();
+                            var streamInfos = new IStreamInfo[] { streamInfo };
 
                             var title = video.Title;
                             var progressHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
 
                             // Startet den Download (Nur Audiospur)
                             download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[7];
-                            await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, progressHandler);
-
-                            // Konvertiert die Audiospur (in Form einer mp4 Datei) in eine mp3 Datei und löscht anschließend die mp4
-                            download_progress_label.Text = langpack[5] + (Convert.ToInt32(i) + 1) + langpack[6] + video_links.Count + langpack[8];
-                            pictureBox3.Image = extractor.GetIconFromGroup("imageres.dll", 131, 48).ToBitmap();
-                            pictureBox1.Image = extractor.GetIconFromGroup("imageres.dll", 23, 48).ToBitmap();
-                            var conversion = new NReco.VideoConverter.FFMpegConverter();
+                            await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder($"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}").Build(), progressHandler);
 
                             using (var client = new WebClient()) // Downloadet das Thumbnail
                             {
@@ -352,8 +401,6 @@ namespace YT_Downloader
 
                             await Task.Run(() =>
                             {
-
-                                conversion.ConvertMedia($"{path.Text}\\" + RemoveIllegalCharacters(title) + "." + streamInfo.Container, $"{path.Text}\\" + RemoveIllegalCharacters(title) + $".{formataudio}", formataudio); ; //https://www.youtube.com/watch?v=v8l_A5v8OTE
                                 if (System.IO.File.Exists($"{path.Text}\\maxresdefault.jpg") == true)
                                 {
                                     TagLib.Id3v2.Tag.DefaultVersion = 3;
@@ -490,7 +537,6 @@ namespace YT_Downloader
                     MP3.Enabled = true;
                     WAV.Enabled = true;
                     AIFF.Enabled = true;
-                    AAC.Enabled = true;
                     WEBM.Enabled = true;
                     FLAC.Enabled = true;
                     OGG.Enabled = true;
@@ -502,6 +548,14 @@ namespace YT_Downloader
                     WEBM.Enabled = true;
                     MPEG.Enabled = true;
                     WEBM_VIDEO.Enabled = true;
+
+                    radioButton1.Enabled = true;
+                    radioButton2.Enabled = true;
+                    radioButton3.Enabled = true;
+                    radioButton4.Enabled = true;
+                    radioButton5.Enabled = true;
+                    radioButton6.Enabled = true;
+                    radioButton7.Enabled = true;
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
@@ -671,6 +725,61 @@ namespace YT_Downloader
         private void MPEG_CheckedChanged(object sender, EventArgs e)
         {
             formatvideo = "mpeg";
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "144p";
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "240p";
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "360p";
+        }
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "720p";
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "1080p";
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "1440p";
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "2160p";
+        }
+
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            videoQuality = "4320p";
+        }
+
+        private void m4a_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "m4a";
+        }
+
+        private void wma_CheckedChanged(object sender, EventArgs e)
+        {
+            formataudio = "wma";
+        }
+
+        private void dl_sub_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBox1.Enabled = dl_sub.Checked;
         }
     }
 }

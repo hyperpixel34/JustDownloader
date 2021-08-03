@@ -63,6 +63,14 @@ namespace YT_Downloader
             this.browse = new System.Windows.Forms.Button();
             this.path = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.quality = new System.Windows.Forms.GroupBox();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.FLV = new System.Windows.Forms.RadioButton();
             this.MPEG = new System.Windows.Forms.RadioButton();
@@ -72,12 +80,14 @@ namespace YT_Downloader
             this.MP4 = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.OGG = new System.Windows.Forms.RadioButton();
-            this.AAC = new System.Windows.Forms.RadioButton();
             this.FLAC = new System.Windows.Forms.RadioButton();
             this.WEBM = new System.Windows.Forms.RadioButton();
             this.AIFF = new System.Windows.Forms.RadioButton();
             this.WAV = new System.Windows.Forms.RadioButton();
             this.MP3 = new System.Windows.Forms.RadioButton();
+            this.subtitles = new System.Windows.Forms.GroupBox();
+            this.dl_sub = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -87,8 +97,10 @@ namespace YT_Downloader
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.format.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.quality.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.subtitles.SuspendLayout();
             this.SuspendLayout();
             // 
             // backgroundWorker1
@@ -163,7 +175,7 @@ namespace YT_Downloader
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.download_progress_label});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 470);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 486);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(584, 22);
             this.statusStrip1.TabIndex = 15;
@@ -182,7 +194,7 @@ namespace YT_Downloader
             this.tabControl1.Location = new System.Drawing.Point(0, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(584, 439);
+            this.tabControl1.Size = new System.Drawing.Size(584, 455);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
@@ -204,7 +216,7 @@ namespace YT_Downloader
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(576, 413);
+            this.tabPage1.Size = new System.Drawing.Size(576, 429);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Download";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -212,7 +224,7 @@ namespace YT_Downloader
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(383, 327);
+            this.pictureBox3.Location = new System.Drawing.Point(383, 335);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(54, 50);
             this.pictureBox3.TabIndex = 89;
@@ -221,7 +233,7 @@ namespace YT_Downloader
             // pictureBox2
             // 
             this.pictureBox2.Image = global::YT_Downloader.Properties.Resources.empty;
-            this.pictureBox2.Location = new System.Drawing.Point(199, 327);
+            this.pictureBox2.Location = new System.Drawing.Point(199, 335);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(178, 50);
             this.pictureBox2.TabIndex = 88;
@@ -230,7 +242,7 @@ namespace YT_Downloader
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(139, 327);
+            this.pictureBox1.Location = new System.Drawing.Point(139, 335);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(54, 50);
             this.pictureBox1.TabIndex = 87;
@@ -238,7 +250,7 @@ namespace YT_Downloader
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 383);
+            this.progressBar1.Location = new System.Drawing.Point(8, 391);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(560, 23);
             this.progressBar1.TabIndex = 86;
@@ -264,7 +276,7 @@ namespace YT_Downloader
             // download
             // 
             this.download.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.download.Location = new System.Drawing.Point(346, 277);
+            this.download.Location = new System.Drawing.Point(346, 281);
             this.download.Name = "download";
             this.download.Size = new System.Drawing.Size(182, 37);
             this.download.TabIndex = 83;
@@ -280,7 +292,7 @@ namespace YT_Downloader
             this.format.Controls.Add(this.audio_btn);
             this.format.Location = new System.Drawing.Point(47, 258);
             this.format.Name = "format";
-            this.format.Size = new System.Drawing.Size(238, 67);
+            this.format.Size = new System.Drawing.Size(238, 71);
             this.format.TabIndex = 82;
             this.format.TabStop = false;
             this.format.Text = "Format";
@@ -390,15 +402,119 @@ namespace YT_Downloader
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.subtitles);
+            this.tabPage2.Controls.Add(this.quality);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(576, 413);
+            this.tabPage2.Size = new System.Drawing.Size(576, 429);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Optionen";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // quality
+            // 
+            this.quality.Controls.Add(this.radioButton7);
+            this.quality.Controls.Add(this.radioButton4);
+            this.quality.Controls.Add(this.radioButton5);
+            this.quality.Controls.Add(this.radioButton6);
+            this.quality.Controls.Add(this.radioButton3);
+            this.quality.Controls.Add(this.radioButton2);
+            this.quality.Controls.Add(this.radioButton1);
+            this.quality.Location = new System.Drawing.Point(349, 7);
+            this.quality.Name = "quality";
+            this.quality.Size = new System.Drawing.Size(219, 116);
+            this.quality.TabIndex = 8;
+            this.quality.TabStop = false;
+            this.quality.Text = "Qualität";
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton7.Location = new System.Drawing.Point(56, 89);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(55, 18);
+            this.radioButton7.TabIndex = 6;
+            this.radioButton7.Text = "720p";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton4.Location = new System.Drawing.Point(123, 66);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(87, 18);
+            this.radioButton4.TabIndex = 5;
+            this.radioButton4.Text = "4K (WEBM)";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton5.Location = new System.Drawing.Point(123, 43);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(61, 18);
+            this.radioButton5.TabIndex = 4;
+            this.radioButton5.Text = "1440p";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Checked = true;
+            this.radioButton6.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton6.Location = new System.Drawing.Point(124, 20);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(61, 18);
+            this.radioButton6.TabIndex = 3;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "1080p";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton3.Location = new System.Drawing.Point(56, 66);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(55, 18);
+            this.radioButton3.TabIndex = 2;
+            this.radioButton3.Text = "360p";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton2.Location = new System.Drawing.Point(56, 43);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(55, 18);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "240p";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButton1.Location = new System.Drawing.Point(57, 20);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(55, 18);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.Text = "144p";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -492,7 +608,6 @@ namespace YT_Downloader
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.OGG);
-            this.groupBox1.Controls.Add(this.AAC);
             this.groupBox1.Controls.Add(this.FLAC);
             this.groupBox1.Controls.Add(this.WEBM);
             this.groupBox1.Controls.Add(this.AIFF);
@@ -516,18 +631,6 @@ namespace YT_Downloader
             this.OGG.Text = "OGG";
             this.OGG.UseVisualStyleBackColor = true;
             this.OGG.CheckedChanged += new System.EventHandler(this.OGG_CheckedChanged);
-            // 
-            // AAC
-            // 
-            this.AAC.AutoSize = true;
-            this.AAC.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AAC.Location = new System.Drawing.Point(7, 92);
-            this.AAC.Name = "AAC";
-            this.AAC.Size = new System.Drawing.Size(52, 18);
-            this.AAC.TabIndex = 5;
-            this.AAC.Text = "AAC";
-            this.AAC.UseVisualStyleBackColor = true;
-            this.AAC.CheckedChanged += new System.EventHandler(this.AAC_CheckedChanged);
             // 
             // FLAC
             // 
@@ -591,11 +694,45 @@ namespace YT_Downloader
             this.MP3.UseVisualStyleBackColor = true;
             this.MP3.CheckedChanged += new System.EventHandler(this.MP3_CheckedChanged);
             // 
+            // subtitles
+            // 
+            this.subtitles.Controls.Add(this.comboBox1);
+            this.subtitles.Controls.Add(this.dl_sub);
+            this.subtitles.Location = new System.Drawing.Point(9, 129);
+            this.subtitles.Name = "subtitles";
+            this.subtitles.Size = new System.Drawing.Size(164, 78);
+            this.subtitles.TabIndex = 9;
+            this.subtitles.TabStop = false;
+            this.subtitles.Text = "Untertitel";
+            // 
+            // dl_sub
+            // 
+            this.dl_sub.AutoSize = true;
+            this.dl_sub.Location = new System.Drawing.Point(7, 20);
+            this.dl_sub.Name = "dl_sub";
+            this.dl_sub.Size = new System.Drawing.Size(136, 17);
+            this.dl_sub.TabIndex = 0;
+            this.dl_sub.Text = "Untertitel herunterladen";
+            this.dl_sub.UseVisualStyleBackColor = true;
+            this.dl_sub.CheckedChanged += new System.EventHandler(this.dl_sub_CheckedChanged);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Enabled = false;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.comboBox1.Location = new System.Drawing.Point(6, 43);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(147, 21);
+            this.comboBox1.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 492);
+            this.ClientSize = new System.Drawing.Size(584, 508);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -619,10 +756,14 @@ namespace YT_Downloader
             this.format.ResumeLayout(false);
             this.format.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.quality.ResumeLayout(false);
+            this.quality.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.subtitles.ResumeLayout(false);
+            this.subtitles.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -662,7 +803,6 @@ namespace YT_Downloader
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton OGG;
-        private System.Windows.Forms.RadioButton AAC;
         private System.Windows.Forms.RadioButton FLAC;
         private System.Windows.Forms.RadioButton WEBM;
         private System.Windows.Forms.RadioButton AIFF;
@@ -677,6 +817,17 @@ namespace YT_Downloader
         private System.Windows.Forms.RadioButton WEBM_VIDEO;
         private System.Windows.Forms.RadioButton AVI;
         private System.Windows.Forms.RadioButton MP4;
+        private System.Windows.Forms.GroupBox quality;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton7;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.GroupBox subtitles;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox dl_sub;
     }
 }
 
